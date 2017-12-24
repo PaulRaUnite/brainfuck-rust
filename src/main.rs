@@ -40,12 +40,7 @@ fn main() {
         eprintln!("can't read from {}: {}", filepath, e);
         return;
     }
-    if let None = allowed(&program) {
-        eprintln!("the program have symbols that Brainfuck doesn't contain");
-        return;
+    if let Err(e) = allowed(&program).and_then(|_| {interprete(&program)}) {
+        println!("{}", e);
     }
-
-    if let None = interprete(&mut program) {
-        eprintln!("something went wrong")
-    };
 }
